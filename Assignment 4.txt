@@ -1,0 +1,78 @@
+stored functions
+
+1)Create a function which takes department name as paramater and 
+  return the  no of employee working in that department. 
+
+Ans------------------------
+delimiter //
+drop function Empdept //
+
+create function Empdept( eno int) returns int deterministic
+begin
+declare e_deptno int;
+select count(*) into e_deptno from emp where deptno=eno;
+return e_deptno;
+end //
+
+
+select Empdept(20) //
+
+----------------------------------------------------------------------------------------------------
+2)Write function to return the  department no having more than five employees
+
+
+
+Ans-------------------
+delimiter //
+drop function Max_Dept //
+
+create function Max_Dept( ) returns int deterministic
+begin
+declare e_dept int;
+declare e_count int;
+SELECT deptno,count(*) into e_dept FROM emp group BY deptno having count(*)>5;
+return  e_dept;
+end //
+
+
+select Max_Dept() //
+
+-----------------------------------------------------------------------------------------------------
+
+3)write a function to return the employee who is earning second max salary from a perticular department.
+
+Ans--------------------
+
+delimiter //
+drop function Max_Sal //
+
+create function Max_Sal( ) returns int deterministic
+begin
+declare e_sal int;
+
+SELECT sal into e_sal FROM emp ORDER BY sal DESC LIMIT 1, 1;
+return  e_sal;
+end //
+
+
+select Max_Sal() //
+
+
+-----------------------------------------------------------------------------------------------------
+
+4)write a function to return the employee who is having maximum experience from the emp table.
+
+Ans-------------------
+
+delimiter //
+drop function Max_hireDate //
+
+create function Max_hireDate( ) returns date deterministic
+begin
+declare e_hireDate date;
+select min(hiredate) into e_hireDate from emp ;
+return  e_hireDate;
+end //
+
+
+select Max_hireDate() //
